@@ -5,6 +5,7 @@ output: github_document
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Travis build status](https://travis-ci.org/zamorarr/ppcongress.svg?branch=master)](https://travis-ci.org/zamorarr/ppcongress)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/zamorarr/ppcongress?branch=master&svg=true)](https://ci.appveyor.com/project/zamorarr/ppcongress)
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(

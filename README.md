@@ -3,6 +3,8 @@
 
 [![Travis build
 status](https://travis-ci.org/zamorarr/ppcongress.svg?branch=master)](https://travis-ci.org/zamorarr/ppcongress)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/zamorarr/ppcongress?branch=master&svg=true)](https://ci.appveyor.com/project/zamorarr/ppcongress)
 
 # ppcongress
 
