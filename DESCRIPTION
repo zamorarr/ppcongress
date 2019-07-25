@@ -1,0 +1,24 @@
+Package: ppcongress
+Title: ProPublica Congress API
+Version: 0.0.1
+Authors@R: 
+    person(given = "Robert",
+           family = "Zamora",
+           role = c("aut", "cre"),
+           email = "zamora.rr@gmail.com")
+Description: Provides functions to access ProPublica's Congress API
+License: MIT + file LICENSE
+Imports: 
+    httr,
+    jsonlite,
+    purrr,
+    tibble
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+RoxygenNote: 6.1.1

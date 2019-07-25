@@ -1,0 +1,6 @@
+^README\.Rmd$
+^README_cache$
+^data-raw$
+^LICENSE\.md$
+^ppcongress\.Rproj$
+^\.Rproj\.user$
