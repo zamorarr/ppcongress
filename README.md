@@ -1,6 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![Travis build
+status](https://travis-ci.org/zamorarr/ppcongress.svg?branch=master)](https://travis-ci.org/zamorarr/ppcongress)
+
 # ppcongress
 
 The goal of ppcongress is to provide an R interface to [ProPublica’s
