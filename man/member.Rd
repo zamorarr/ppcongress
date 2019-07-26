@@ -17,4 +17,8 @@ of Congress
 \dontrun{
 member("O000172")
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#get-a-specific-member}
 }

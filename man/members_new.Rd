@@ -13,4 +13,8 @@ Get a list of the 20 most recent new members of the current Congress.
 \dontrun{
 members_new()
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#get-new-members}
 }

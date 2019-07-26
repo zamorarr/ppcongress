@@ -22,4 +22,8 @@ bills cosponsored or bills where cosponsorship was withdrawn
 \dontrun{
 member_bills("O000172")
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#get-bills-cosponsored-by-a-specific-member}
 }

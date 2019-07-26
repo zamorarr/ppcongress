@@ -22,4 +22,8 @@ The results include all members who have served in that congress and chamber,
 \dontrun{
 members("house", 116)
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#lists-of-members}
 }

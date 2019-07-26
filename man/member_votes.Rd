@@ -18,4 +18,8 @@ Get the most recent vote positions for a specific member of the House of Represe
 \dontrun{
 member_votes("O000172")
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#get-a-specific-members-vote-positions}
 }

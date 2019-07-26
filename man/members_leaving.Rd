@@ -21,4 +21,8 @@ get a list of members who have left the Senate or House or have announced plans 
 \dontrun{
 members_leaving("senate", 116)
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#get-members-leaving-office}
 }

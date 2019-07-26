@@ -21,4 +21,8 @@ Get biographical and Congressional role information for a particular member of C
 \dontrun{
 members_location("senate", "TX")
 }
+
+}
+\references{
+\url{https://projects.propublica.org/api-docs/congress-api/members/#get-current-members-by-statedistrict}
 }

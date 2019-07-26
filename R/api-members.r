@@ -14,6 +14,8 @@
 #' \dontrun{
 #' members("house", 116)
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#lists-of-members}
 members <- function(chamber = c("house", "senate"), congress = 116) {
   chamber <- match.arg(chamber)
   path <- sprintf("%s/%s/members.json", congress, chamber)
@@ -36,6 +38,8 @@ members <- function(chamber = c("house", "senate"), congress = 116) {
 #' \dontrun{
 #' member("O000172")
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-a-specific-member}
 member <- function(member_id) {
   stopifnot(length(member_id) == 1L)
   path <- sprintf("members/%s.json", member_id)
@@ -56,6 +60,8 @@ member <- function(member_id) {
 #' \dontrun{
 #' members_new()
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-new-members}
 members_new <- function() {
   path <- "members/new.json"
   results <- congress_api(path)
@@ -80,6 +86,8 @@ members_new <- function() {
 #' \dontrun{
 #' members_location("senate", "TX")
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-current-members-by-statedistrict}
 members_location <- function(chamber = c("house", "senate"), state = NULL, district = NULL) {
   chamber <- match.arg(chamber)
 
@@ -123,6 +131,8 @@ members_location <- function(chamber = c("house", "senate"), state = NULL, distr
 #' \dontrun{
 #' members_leaving("senate", 116)
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-members-leaving-office}
 members_leaving <- function(chamber = c("house", "senate"), congress = 116, page = 1L) {
   chamber <- match.arg(chamber)
   path <- sprintf("%s/%s/members/leaving.json", congress, chamber)
@@ -147,6 +157,8 @@ members_leaving <- function(chamber = c("house", "senate"), congress = 116, page
 #' \dontrun{
 #' member_votes("O000172")
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-a-specific-members-vote-positions}
 member_votes <- function(member_id, page = 1L) {
   stopifnot(length(member_id) == 1L)
   path <- sprintf("members/%s/votes.json", member_id)
@@ -173,6 +185,8 @@ member_votes <- function(member_id, page = 1L) {
 #' \dontrun{
 #' member_bills("O000172")
 #' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-bills-cosponsored-by-a-specific-member}
 member_bills <- function(member_id, type = c("cosponsored", "withdrawn"), page = 1L) {
   stopifnot(length(member_id) == 1L)
   type <- match.arg(type)
