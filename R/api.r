@@ -34,15 +34,18 @@ congress_api <- function(path, query = NULL) {
 
   # check errors
   if (httr::http_error(response) || !identical(json$status, "OK")) {
-    stop(
-      sprintf(
-        "%s\nCongress API request failed [%s]\n%s\n",
-        url,
-        httr::status_code(response),
-        json$errors[[1]]$error
-      ),
-      call. = FALSE
-    )
+    # base error message
+    status_code <- httr::status_code(response)
+    msg <- sprintf("%s\nCongress API request failed [%s]\n", url, status_code)
+
+    # add specific error message if it exists
+    error <- json$errors[[1]]$error
+    if (length(error) > 0) {
+      msg <- paste(msg, error, sep = "\n")
+    }
+
+    # stop execution
+    stop(msg, call. = FALSE)
   }
 
   # return object
