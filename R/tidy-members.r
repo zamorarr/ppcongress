@@ -1,7 +1,3 @@
-#' @importFrom tibble as_tibble
-#' @export
-tibble::as_tibble
-
 #' Convert json object to a dataframe
 #' @param x list object
 #' @param ... other parameters passed to \code{\link[tibble]{as_tibble}}:
@@ -33,6 +29,7 @@ as_tibble.ppmember <- function(x, ...) {
 
   # convert list to data frame
   mems <- replace_nulls(x)
+  class(mems) <- "list"
   df <- tibble::as_tibble(mems)
 
   # fix column types
