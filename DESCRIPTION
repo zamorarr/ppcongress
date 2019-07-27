@@ -6,7 +6,7 @@ Authors@R:
            family = "Zamora",
            role = c("aut", "cre"),
            email = "zamora.rr@gmail.com")
-Description: Provides functions to access ProPublica's Congress API
+Description: Provides functions to access ProPublica's Congress API.
 License: MIT + file LICENSE
 Imports: 
     httr,
