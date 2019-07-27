@@ -55,6 +55,11 @@ bills_search <- function(query, sort = c("date", "_score"),
 #' older bills came from scraping Thomas.gov, the former congressional site of
 #' the Library of Congress.
 #'
+#' @param chamber house or senate
+#' @param congress 105-116
+#' @param type introduced, updated, active, passed, enacted, or vetoed
+#' @param page page of results
+#'
 #' @examples
 #' \dontrun{
 #' bills_recent("house", 116, "enacted")
