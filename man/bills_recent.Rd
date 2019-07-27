@@ -8,6 +8,15 @@ bills_recent(chamber = c("house", "senate"), congress = 116,
   type = c("introduced", "updated", "active", "passed", "enacted",
   "vetoed"), page = 1L)
 }
+\arguments{
+\item{chamber}{house or senate}
+
+\item{congress}{105-116}
+
+\item{type}{introduced, updated, active, passed, enacted, or vetoed}
+
+\item{page}{page of results}
+}
 \description{
 Use this request type to get summaries of the 20 most recent bills by type.
 For the current Congress, “recent bills” can be one of four types
