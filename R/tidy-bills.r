@@ -65,7 +65,7 @@ as_tibble.ppbill <- function(x, ...) {
   class(bill) <- "list"
 
   # lists need to be wrapped in a list to have length 1
-  to_wrap <- vapply(j, is.list, logical(1L))
+  to_wrap <- vapply(bill, is.list, logical(1L))
   bill[to_wrap] <- lapply(bill[to_wrap], function(y) list(y))
 
   # convert to data frame
