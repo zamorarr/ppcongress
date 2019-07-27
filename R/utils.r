@@ -57,3 +57,13 @@ normalize_offset <- function(x) {
 offset_from_page <- function(page) {
   20L*(page - 1L)
 }
+
+#' Convert list of lists to data frame
+#'
+#' @param x a list of lists
+transpose_to_df <- function(x) {
+  y <- purrr::transpose(x)
+  y <- purrr::map(y, replace_nulls)
+  y <- purrr::simplify_all(y)
+  tibble::as_tibble(y)
+}
