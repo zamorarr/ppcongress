@@ -20,8 +20,17 @@ congress_api <- function(path, query = NULL, class = NULL, extract = TRUE) {
     "Content-Type" = "application/json",
     "Accept" = "application/json")
 
+  # build user agent
+  ua <- httr::user_agent(
+    sprintf(
+      "ppcongress v%s: (<%s>)",
+      utils::packageVersion("ppcongress"),
+      utils::packageDescription("ppcongress")$URL
+    )
+  )
+
   # get response
-  response <- httr::GET(url, request)
+  response <- httr::GET(url, request, ua)
 
   # check response type
   if (httr::http_type(response) != "application/json") {
