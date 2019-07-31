@@ -250,3 +250,54 @@ bill_subjects <- function(bill_id, congress = 116L, page = 1L) {
   results
 }
 
+#' Get Related Bills for a Specific Bill
+#'
+#' Use this request type to get Library of Congress-identified related bills for
+#' a particular bill. This request returns the 20 most recent results and
+#' supports paginated requests.
+#'
+#' @param bill_id a bill slug, for example hr4881 - these can be found in the recent bill response.
+#' @param congress 105-116
+#' @param page page of results
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' bill_related("hr3219", 115)
+#' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/bills/#get-related-bills-for-a-specific-bill}
+bill_related <- function(bill_id, congress = 116L, page = 1L) {
+  path <- sprintf("%s/bills/%s/related.json", congress, bill_id)
+  params <- list(offset = offset_from_page(page))
+
+  # get results
+  results <- congress_api(path, class = "bill_related")
+  results
+}
+
+#' Get Cosponsors for a Specific Bill
+#'
+#' Get information about the cosponsors of a particular bill
+#'
+#' @param bill_id a bill slug, for example hr4881 - these can be found in the recent bill response.
+#' @param congress 105-116
+#' @param page page of results
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' bill_cosponsors("hr4249", 114)
+#' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/bills/#get-cosponsors-for-a-specific-bill}
+bill_cosponsors <- function(bill_id, congress = 116L, page = 1L) {
+  path <- sprintf("%s/bills/%s/cosponsors.json", congress, bill_id)
+  params <- list(offset = offset_from_page(page))
+
+  # get results
+  results <- congress_api(path, class = "bill_cosponsors")
+  results
+}
+
+

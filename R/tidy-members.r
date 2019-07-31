@@ -12,36 +12,19 @@ as_tibble.ppmembers <- function(x, ...) {
   df <- tibble::as_tibble(mems)
 
   # fix column types
-  cnames <- colnames(df)
-  to_date <- intersect(c("date_of_birth", "begin_date", "end_date"), cnames)
-  to_dttm <- intersect(c("last_updated"), cnames)
-  to_integer <- intersect(c("seniority", "next_election", "senate_class"), cnames)
-
-  df[to_date] <- lapply(df[to_date], as.Date)
-  df[to_dttm] <- lapply(df[to_dttm], as.POSIXct)
-  df[to_integer] <- lapply(df[to_integer], as.integer)
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppmembers
 #' @export
 as_tibble.ppmember <- function(x, ...) {
-
   # convert list to data frame
   mems <- replace_nulls(x)
   class(mems) <- "list"
   df <- tibble::as_tibble(mems)
 
   # fix column types
-  cnames <- colnames(df)
-  to_date <- intersect(c("date_of_birth", "most_recent_vote"), cnames)
-  to_dttm <- intersect(c("last_updated"), cnames)
-  to_integer <- intersect(c("seniority", "next_election"), cnames)
-
-  df[to_date] <- lapply(df[to_date], as.Date)
-  df[to_dttm] <- lapply(df[to_dttm], as.POSIXct)
-  df[to_integer] <- lapply(df[to_integer], as.integer)
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppmembers
@@ -75,21 +58,7 @@ as_tibble.ppmember_votes <- function(x, ...) {
   df <- tibble::as_tibble(votes)
 
   # fix column types
-  df$date <- paste(df$date, df$time)
-  df$time <- NULL
-
-  cnames <- colnames(df)
-  to_dttm <- intersect(c("date"), cnames)
-  to_integer <- intersect(c("congress", "session", "roll_call"), cnames)
-  to_df <- intersect(c("bill", "total", "amendment"), cnames)
-
-  df[to_dttm] <- lapply(df[to_dttm], as.POSIXct)
-  df[to_integer] <- lapply(df[to_integer], as.integer)
-  df[to_df] <- lapply(df[to_df], function(x) {
-    lapply(x, tibble::as_tibble)
-  })
-
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppmembers
@@ -104,16 +73,5 @@ as_tibble.ppmember_bills <- function(x, ...) {
   df <- tibble::as_tibble(bills)
 
   # fix column types
-  cnames <- colnames(df)
-  to_date <- intersect(c("cosponsored_date", "introduced_date", "last_major_action_date"), cnames)
-  to_integer <- intersect(c("congress", "cosponsors"), cnames)
-  to_df <- intersect(c("cosponsors_by_party"), cnames)
-
-  df[to_date] <- lapply(df[to_date], as.Date)
-  df[to_integer] <- lapply(df[to_integer], as.integer)
-  df[to_df] <- lapply(df[to_df], function(x) {
-    lapply(x, tibble::as_tibble)
-  })
-
-  df
+  fix_column_types(df)
 }

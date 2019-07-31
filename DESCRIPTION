@@ -9,8 +9,10 @@ Authors@R:
 Description: Provides functions to access ProPublica's Congress API.
 License: MIT + file LICENSE
 Imports: 
+    hms,
     httr,
     jsonlite,
+    lubridate,
     purrr,
     tibble
 Suggests: 
