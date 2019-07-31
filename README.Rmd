@@ -30,26 +30,6 @@ The following endpoints are on the roadmap:
 
 Please file an [issue](https://github.com/zamorarr/ppcongress/issues) if there are other endpoints you want added.
 
-## Example
-
-```{r load-pkg}
-library(ppcongress)
-```
-
-You can get a list of all the members of the 116th congress in the house with the `members()` function:
-
-```{r house-116, cache=TRUE}
-json <- members("house", 116)
-print(json)
-```
-
-The function `as_tibble()` will convert this list object to a data frame:
-
-```{r as_tibble}
-df <- as_tibble(json)
-str(df)
-```
-
 ## Installation
 
 You can install the development version of ppcongress from [GitHub](https://github.com/zamorarr/ppcongress) with:
@@ -68,4 +48,38 @@ Then adding the following line, replacing XXX with your own key.
 
 ```sh
 PROPUBLICA_API_KEY=XXX
+```
+
+
+## Example
+
+```{r load-pkg}
+library(ppcongress)
+```
+
+### Members
+You can get a list of all the members of the 116th congress in the house with the `members()` function:
+
+```{r members-house-116, cache=TRUE}
+json <- members("house", 116)
+print(json)
+```
+
+The function `as_tibble()` will convert this list object to a data frame:
+
+```{r members-as-tibble}
+df <- as_tibble(json)
+print(df)
+```
+
+### Bills
+You can get a list of all upcoming bills in the house:
+
+```{r r bills-upcoming, cache=TRUE}
+json <- bills_upcoming("house")
+print(json)
+```
+
+```{r bills-as-tibble}
+as_tibble(json)
 ```
