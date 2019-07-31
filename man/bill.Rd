@@ -4,7 +4,7 @@
 \alias{bill}
 \title{Get a Specific Bill}
 \usage{
-bill(bill_id, congress)
+bill(bill_id, congress = 116L)
 }
 \arguments{
 \item{bill_id}{a bill slug, for example hr4881 - these can be found in the recent bill response.}
@@ -24,6 +24,7 @@ Thomas.gov, the former congressional site of the Library of Congress.
 \examples{
 \dontrun{
 bill("hr502", 116)
+bill("s1436", 116)
 }
 
 }

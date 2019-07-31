@@ -186,16 +186,67 @@ bills_upcoming <- function(chamber = c("house", "senate")) {
 #' @examples
 #' \dontrun{
 #' bill("hr502", 116)
+#' bill("s1436", 116)
 #' }
 #'
 #' @references \url{https://projects.propublica.org/api-docs/congress-api/bills/#get-a-specific-bill}
-bill <- function(bill_id, congress) {
+bill <- function(bill_id, congress = 116L) {
   path <- sprintf("%s/bills/%s.json", congress, bill_id)
 
   # get results
-  results <- congress_api(path)
-  results <- set_ppclass(results, "bill")
-  results <- extract_single_result(results)
+  results <- congress_api(path, class = "bill")
+  results
+}
+
+#' Get Amendments for a Specific Bill
+#'
+#' Use this request type to get Library of Congress-assigned subjects about a
+#' particular bill. This request returns the 20 most recent results and supports
+#' paginated requests.
+#'
+#' @param bill_id a bill slug, for example hr4881 - these can be found in the recent bill response.
+#' @param congress 105-116
+#' @param page page of results
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' bill_amendments("hr1628", 115)
+#' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/bills/#get-amendments-for-a-specific-bill}
+bill_amendments <- function(bill_id, congress = 116L, page = 1L) {
+  path <- sprintf("%s/bills/%s/amendments.json", congress, bill_id)
+  params <- list(offset = offset_from_page(page))
+
+  # get results
+  results <- congress_api(path, class = "bill_amendments")
+  results
+}
+
+#' Get Subjects for a Specific Bill
+#'
+#' Use this request type to get Library of Congress-assigned subjects about a
+#' particular bill. This request returns the 20 most recent results and supports
+#' paginated requests.
+#'
+#' @param bill_id a bill slug, for example hr4881 - these can be found in the recent bill response.
+#' @param congress 105-116
+#' @param page page of results
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' bill_subjects("hr2810", 115)
+#' }
+#'
+#' @references \url{https://projects.propublica.org/api-docs/congress-api/bills/#get-subjects-for-a-specific-bill}
+bill_subjects <- function(bill_id, congress = 116L, page = 1L) {
+  path <- sprintf("%s/bills/%s/subjects.json", congress, bill_id)
+  params <- list(offset = offset_from_page(page))
+
+  # get results
+  results <- congress_api(path, class = "bill_subjects")
   results
 }
 

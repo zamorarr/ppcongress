@@ -6,6 +6,8 @@
 \alias{as_tibble.ppbills_search_subjects}
 \alias{as_tibble.ppbills_upcoming}
 \alias{as_tibble.ppbill}
+\alias{as_tibble.ppbill_amendments}
+\alias{as_tibble.ppbill_subjects}
 \title{Convert json object to a dataframe}
 \usage{
 \method{as_tibble}{ppbills_search}(x, ...)
@@ -17,6 +19,10 @@
 \method{as_tibble}{ppbills_upcoming}(x, ...)
 
 \method{as_tibble}{ppbill}(x, ...)
+
+\method{as_tibble}{ppbill_amendments}(x, ...)
+
+\method{as_tibble}{ppbill_subjects}(x, ...)
 }
 \arguments{
 \item{x}{list object}
