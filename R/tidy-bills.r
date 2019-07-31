@@ -12,25 +12,7 @@ as_tibble.ppbills_search <- function(x, ...) {
   df <- transpose_to_df(x$bills)
 
   # fix column types
-  cnames <- colnames(df)
-  to_integer <- intersect(c("congress"), cnames)
-  to_date <- intersect(c("introduced_date", "last_vote", "house_passage", "senate_passage",
-                         "enacted", "vetoed", "latest_major_action_date", "legislative_day"), cnames)
-  to_dttm <- intersect(c("scheduled_at"), cnames)
-  to_character <- intersect(c("gpo_pdf_uri"), cnames)
-  to_df <- intersect(c("cosponsors_by_party"), cnames)
-
-  df[to_integer] <- lapply(df[to_integer], as.integer)
-  df[to_date] <- lapply(df[to_date], as.Date)
-  df[to_dttm] <- lapply(df[to_dttm], function(x) {
-    dttm <- gsub(":([0-9]{2})$", "\\1", x)
-    as.POSIXct(dttm, tz = "America/New_York", format = "%Y-%m-%dT%H:%M:%S%z")
-  })
-  df[to_character] <- lapply(df[to_character], as.character)
-  df[to_df] <- lapply(df[to_df], function(x) {
-    lapply(x, tibble::as_tibble)
-  })
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppbills_search
@@ -45,10 +27,7 @@ as_tibble.ppbills_search_subjects <- function(x, ...) {
   df <- transpose_to_df(x$subjects)
 
   # fix column types
-  cnames <- colnames(df)
-  to_logical <- intersect(c("has_bills", "has_statements"), cnames)
-  df[to_logical] <- lapply(df[to_logical], as.logical)
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppbills_search
@@ -72,32 +51,7 @@ as_tibble.ppbill <- function(x, ...) {
   df <- tibble::as_tibble(bill)
 
   # fix column types
-  cnames <- colnames(df)
-  to_date <- intersect(c("introduced_date", "last_vote", "house_passage",
-                         "latest_major_action_date", "house_passage_vote",
-                         "senate_passage_vote"), cnames)
-  to_df <- intersect(c("cosponsors_by_party"), cnames)
-  to_unlist <- intersect(c("committee_codes", "subcommittee_codes"), cnames)
-  to_nested_df <- intersect(c("versions", "actions", "votes"), cnames)
-
-  df[to_date] <- lapply(df[to_date], as.Date)
-
-  df[to_df] <- lapply(df[to_df], function(x) {
-    lapply(x, tibble::as_tibble)
-  })
-
-  df[to_unlist] <- lapply(df[to_unlist], function(x) {
-    lapply(x, unlist)
-  })
-
-  df[to_nested_df] <- lapply(df[to_nested_df], function(x) {
-    lapply(x, function(y) {
-      z <- lapply(y, function(yi) tibble::as_tibble(replace_nulls(yi)))
-      do.call(rbind, z)
-    })
-  })
-
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppbills_search
@@ -107,12 +61,7 @@ as_tibble.ppbill_amendments <- function(x, ...) {
   df <- transpose_to_df(x$amendments)
 
   # fix column types
-  cnames <- colnames(df)
-  to_date <- intersect(c("introduced_date", "latest_major_action_date"), cnames)
-
-  df[to_date] <- lapply(df[to_date], as.Date)
-
-  df
+  fix_column_types(df)
 }
 
 #' @rdname as_tibble.ppbills_search
@@ -125,14 +74,36 @@ as_tibble.ppbill_subjects <- function(x, ...) {
   class(x) <- "list"
   df <- as_tibble(x)
 
+  # fix column types
+  fix_column_types(df)
+}
+
+#' @rdname as_tibble.ppbills_search
+#' @export
+as_tibble.ppbill_related <- function(x, ...) {
+  # check there are bills
+  if (!("related_bills" %in% names(x))) {
+    stop("There is no related bills to parse", call. = FALSE)
+  }
+
+  # convert list to data frame
+  df <- transpose_to_df(x$related_bills)
 
   # fix column types
-  cnames <- colnames(df)
-  to_integer <- intersect(c("congress"), cnames)
-  to_date <- intersect(c("introduced_date", "latest_major_action_date",
-                         "house_passage_vote", "senate_passage_vote"), cnames)
+  fix_column_types(df)
+}
 
-  df[to_integer] <- lapply(df[to_integer], as.integer)
-  df[to_date] <- lapply(df[to_date], as.Date)
-  df
+#' @rdname as_tibble.ppbills_search
+#' @export
+as_tibble.ppbill_cosponsors <- function(x, ...) {
+  # check there are bills
+  if (!("cosponsors" %in% names(x))) {
+    stop("There is no cosponsors to parse", call. = FALSE)
+  }
+
+  # convert list to data frame
+  df <- transpose_to_df(x$cosponsors)
+
+  # fix column types
+  fix_column_types(df)
 }

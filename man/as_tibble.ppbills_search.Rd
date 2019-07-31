@@ -8,6 +8,8 @@
 \alias{as_tibble.ppbill}
 \alias{as_tibble.ppbill_amendments}
 \alias{as_tibble.ppbill_subjects}
+\alias{as_tibble.ppbill_related}
+\alias{as_tibble.ppbill_cosponsors}
 \title{Convert json object to a dataframe}
 \usage{
 \method{as_tibble}{ppbills_search}(x, ...)
@@ -23,6 +25,10 @@
 \method{as_tibble}{ppbill_amendments}(x, ...)
 
 \method{as_tibble}{ppbill_subjects}(x, ...)
+
+\method{as_tibble}{ppbill_related}(x, ...)
+
+\method{as_tibble}{ppbill_cosponsors}(x, ...)
 }
 \arguments{
 \item{x}{list object}
