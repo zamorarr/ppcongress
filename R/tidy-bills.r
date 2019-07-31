@@ -92,7 +92,7 @@ as_tibble.ppbill <- function(x, ...) {
 
   df[to_nested_df] <- lapply(df[to_nested_df], function(x) {
     lapply(x, function(y) {
-      z <- lapply(y, tibble::as_tibble)
+      z <- lapply(y, function(yi) tibble::as_tibble(replace_nulls(yi)))
       do.call(rbind, z)
     })
   })
@@ -100,4 +100,39 @@ as_tibble.ppbill <- function(x, ...) {
   df
 }
 
+#' @rdname as_tibble.ppbills_search
+#' @export
+as_tibble.ppbill_amendments <- function(x, ...) {
+  # convert list to data frame
+  df <- transpose_to_df(x$amendments)
 
+  # fix column types
+  cnames <- colnames(df)
+  to_date <- intersect(c("introduced_date", "latest_major_action_date"), cnames)
+
+  df[to_date] <- lapply(df[to_date], as.Date)
+
+  df
+}
+
+#' @rdname as_tibble.ppbills_search
+#' @export
+as_tibble.ppbill_subjects <- function(x, ...) {
+  # convert list to data frame
+  x$subjects <- purrr::map_dfr(x$subjects, tibble::as_tibble)
+  x$subjects <- list(x$subjects)
+  x <- replace_nulls(x)
+  class(x) <- "list"
+  df <- as_tibble(x)
+
+
+  # fix column types
+  cnames <- colnames(df)
+  to_integer <- intersect(c("congress"), cnames)
+  to_date <- intersect(c("introduced_date", "latest_major_action_date",
+                         "house_passage_vote", "senate_passage_vote"), cnames)
+
+  df[to_integer] <- lapply(df[to_integer], as.integer)
+  df[to_date] <- lapply(df[to_date], as.Date)
+  df
+}
