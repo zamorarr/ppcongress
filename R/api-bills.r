@@ -33,9 +33,7 @@ bills_search <- function(query, sort = c("date", "_score"),
   )
 
   # get results
-  results <- congress_api(path, params)
-  results <- set_ppclass(results, "bills_search")
-  results <- extract_single_result(results)
+  results <- congress_api(path, params, class = "bills_search")
   results
 }
 
@@ -80,9 +78,7 @@ bills_recent <- function(chamber = c("house", "senate"),
   )
 
   # get results
-  results <- congress_api(path, params)
-  results <- set_ppclass(results, "bills_recent")
-  results <- extract_single_result(results)
+  results <- congress_api(path, params, class = "bills_recent")
   results
 }
 
@@ -106,8 +102,7 @@ bills_recent_subject <- function(subject, page = 1L) {
   #params <- list(offset = offset_from_page(page))
 
   # get results
-  results <- congress_api(path)#, params)
-  results <- set_ppclass(results, "bills_recent_subject")
+  results <- congress_api(path, class = "bills_recent_subject", extract = FALSE)
   results
 }
 
@@ -134,9 +129,7 @@ bills_search_subjects <- function(query, page = 1L) {
   )
 
   # get results
-  results <- congress_api(path, params)
-  results <- set_ppclass(results, "bills_search_subjects")
-  results <- extract_single_result(results)
+  results <- congress_api(path, params, class = "bills_search_subjects")
   results
 }
 
@@ -171,9 +164,7 @@ bills_upcoming <- function(chamber = c("house", "senate")) {
   path <- sprintf("bills/upcoming/%s.json", chamber)
 
   # get results
-  results <- congress_api(path)
-  results <- set_ppclass(results, "bills_upcoming")
-  results <- extract_single_result(results)
+  results <- congress_api(path, class = "bills_upcoming")
   results
 }
 

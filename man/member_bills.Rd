@@ -4,8 +4,8 @@
 \alias{member_bills}
 \title{Get Bills Cosponsored by a Specific Member}
 \usage{
-member_bills(member_id, type = c("cosponsored", "withdrawn"),
-  page = 1L)
+member_bills(member_id, type = c("cosponsored", "withdrawn",
+  "introduced", "updated"), page = 1L)
 }
 \arguments{
 \item{member_id}{The ID of the member to retrieve; it is assigned by the \href{http://bioguide.congress.gov/biosearch/biosearch.asp}{Biographical Directory of the United States Congress} or can be retrieved from a member list request.}
@@ -16,7 +16,7 @@ member_bills(member_id, type = c("cosponsored", "withdrawn"),
 }
 \description{
 Get the 20 most recent bill cosponsorships for a particular member, either
-bills cosponsored or bills where cosponsorship was withdrawn
+bills cosponsored, withdrawn, introduced, or updated.
 }
 \examples{
 \dontrun{

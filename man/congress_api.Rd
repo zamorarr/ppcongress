@@ -4,7 +4,7 @@
 \alias{congress_api}
 \title{Congress API}
 \usage{
-congress_api(path, query = NULL)
+congress_api(path, query = NULL, class = NULL, extract = TRUE)
 }
 \arguments{
 \item{path}{path to endpoint}

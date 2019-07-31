@@ -4,7 +4,7 @@
 #'
 #' @param path path to endpoint
 #' @keywords internal
-congress_api <- function(path, query = NULL) {
+congress_api <- function(path, query = NULL, class = NULL, extract = TRUE) {
   stopifnot(length(path) == 1L)
 
   baseurl <- "https://api.propublica.org"
@@ -39,8 +39,9 @@ congress_api <- function(path, query = NULL) {
     msg <- sprintf("%s\nCongress API request failed [%s]\n", url, status_code)
 
     # add specific error message if it exists
-    error <- json$errors[[1]]$error
+    error <- json$errors
     if (length(error) > 0) {
+      if (is.list(error)) error <- error[[1]]$error
       msg <- paste(msg, error, sep = "\n")
     }
 
@@ -48,8 +49,20 @@ congress_api <- function(path, query = NULL) {
     stop(msg, call. = FALSE)
   }
 
-  # return object
-  new_congress(json$results, path)
+  # build object
+  results <- new_congress(json$results, path)
+
+  # set object class
+  if (!is.null(class)) {
+    results <- set_ppclass(results, class)
+  }
+
+  # extract single result or not
+  if (extract) {
+    results <- extract_single_result(results)
+  }
+
+  results
 }
 
 #' Create a new congress object

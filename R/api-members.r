@@ -19,10 +19,7 @@
 members <- function(chamber = c("house", "senate"), congress = 116) {
   chamber <- match.arg(chamber)
   path <- sprintf("%s/%s/members.json", congress, chamber)
-  results <- congress_api(path)
-
-  results <- set_ppclass(results, "members")
-  results <- extract_single_result(results)
+  results <- congress_api(path, class = "members")
   results
 }
 
@@ -43,10 +40,7 @@ members <- function(chamber = c("house", "senate"), congress = 116) {
 member <- function(member_id) {
   stopifnot(length(member_id) == 1L)
   path <- sprintf("members/%s.json", member_id)
-  results <- congress_api(path)
-
-  results <- set_ppclass(results, "member")
-  results <- extract_single_result(results)
+  results <- congress_api(path, class = "member")
   results
 }
 
@@ -64,13 +58,8 @@ member <- function(member_id) {
 #' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-new-members}
 members_new <- function() {
   path <- "members/new.json"
-  results <- congress_api(path)
-
-  results <- set_ppclass(results, "members_new")
-  results <- extract_single_result(results)
+  results <- congress_api(path, class = "members_new")
   results <- normalize_offset(results)
-
-  # return value
   results
 }
 
@@ -112,8 +101,7 @@ members_location <- function(chamber = c("house", "senate"), state = NULL, distr
   }
 
   # get results
-  results <- congress_api(path)
-  results <- set_ppclass(results, "members_location")
+  results <- congress_api(path, class = "members_location", extract = FALSE)
   results
 }
 
@@ -137,11 +125,7 @@ members_leaving <- function(chamber = c("house", "senate"), congress = 116, page
   chamber <- match.arg(chamber)
   path <- sprintf("%s/%s/members/leaving.json", congress, chamber)
   query <- list(offset = offset_from_page(page))
-  results <- congress_api(path, query)
-
-  # get results
-  results <- set_ppclass(results, "members_leaving")
-  results <- extract_single_result(results)
+  results <- congress_api(path, query, class = "members_leaving")
   results
 }
 
@@ -163,11 +147,7 @@ member_votes <- function(member_id, page = 1L) {
   stopifnot(length(member_id) == 1L)
   path <- sprintf("members/%s/votes.json", member_id)
   query <- list(offset = offset_from_page(page))
-  results <- congress_api(path, query)
-
-  # get results
-  results <- set_ppclass(results, "member_votes")
-  results <- extract_single_result(results)
+  results <- congress_api(path, query, class = "member_votes")
   results <- normalize_offset(results)
   results
 }
@@ -175,7 +155,7 @@ member_votes <- function(member_id, page = 1L) {
 #' Get Bills Cosponsored by a Specific Member
 #'
 #' Get the 20 most recent bill cosponsorships for a particular member, either
-#' bills cosponsored or bills where cosponsorship was withdrawn
+#' bills cosponsored, withdrawn, introduced, or updated.
 #' @param member_id The ID of the member to retrieve; it is assigned by the \href{http://bioguide.congress.gov/biosearch/biosearch.asp}{Biographical Directory of the United States Congress} or can be retrieved from a member list request.
 #' @param type cosponsored or withdrawn
 #' @param page page of results
@@ -187,16 +167,16 @@ member_votes <- function(member_id, page = 1L) {
 #' }
 #'
 #' @references \url{https://projects.propublica.org/api-docs/congress-api/members/#get-bills-cosponsored-by-a-specific-member}
-member_bills <- function(member_id, type = c("cosponsored", "withdrawn"), page = 1L) {
+member_bills <- function(member_id,
+                         type = c("cosponsored", "withdrawn", "introduced", "updated"),
+                         page = 1L) {
+
+  # check arguments
   stopifnot(length(member_id) == 1L)
   type <- match.arg(type)
   path <- sprintf("members/%s/bills/%s.json", member_id, type)
   query <- list(offset = offset_from_page(page))
-  results <- congress_api(path, query)
-
-  # get results
-  results <- set_ppclass(results, "member_bills")
-  results <- extract_single_result(results)
+  results <- congress_api(path, query, class = "member_bills")
   results <- normalize_offset(results)
 
   # return results
